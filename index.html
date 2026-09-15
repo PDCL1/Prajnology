@@ -1,67 +1,385 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to My Website</title>
+  <title>Apex Care Clinic | Premium Healthcare & Consultation</title>
+  <meta name="description" content="Book consultations, view services, and get directions for Apex Clinic in Bhagalpur. Fast, trusted, and accessible healthcare.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- LocalBusiness Structured Data (JSON-LD) for Local SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "name": "Apex Care Clinic",
+    "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600",
+    "telephone": "+919876543210",
+    "url": "https://apexclinic.in",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Main Road, Tilkamanjhi",
+      "addressLocality": "Bhagalpur",
+      "addressRegion": "Bihar",
+      "postalCode": "812001",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 25.2425,
+      "longitude": 86.9842
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00",
+        "closes": "20:00"
+      }
+    ],
+    "priceRange": "₹₹"
+  }
+  </script>
+
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.6;
-      color: #24292f;
-      background-color: #f6f8fa;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .card {
-      background: #ffffff;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 12px;
-      color: #0969da;
-    }
-    p {
-      font-size: 1.1rem;
-      color: #57606a;
-      margin-bottom: 24px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #2da44e;
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: background-color 0.2s ease;
-    }
-    .btn:hover {
-      background-color: #2c974b;
-    }
+    /* Prevent body scroll when modal is active */
+    body.modal-open { overflow: hidden; }
   </style>
 </head>
-<body>
 
-  <div class="card">
-    <h1>🚀 It's Live!</h1>
-    <p>Your GitHub Pages site is set up and working properly.</p>
-    <a href="https://github.com" class="btn" target="_blank">Visit GitHub</a>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased pb-20 md:pb-0">
+
+  <!-- TOP BAR / LANGUAGE SWITCHER -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="bg-blue-600 text-white p-2 rounded-lg">
+          <i data-lucide="activity" class="w-5 h-5"></i>
+        </div>
+        <span class="text-xl font-extrabold text-slate-900 tracking-tight">Apex<span class="text-blue-600">Care</span></span>
+      </div>
+
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+        <a href="#services" class="hover:text-blue-600 transition" data-en="Services" data-hi="सेवाएं">Services</a>
+        <a href="#reviews" class="hover:text-blue-600 transition" data-en="Reviews" data-hi="समीक्षाएं">Reviews</a>
+        <a href="#contact" class="hover:text-blue-600 transition" data-en="Contact" data-hi="संपर्क">Contact</a>
+      </nav>
+
+      <div class="flex items-center space-x-3">
+        <!-- Bilingual Switcher Button -->
+        <button id="langToggle" class="px-2.5 py-1 text-xs font-semibold rounded-md border border-slate-300 text-slate-700 hover:bg-slate-100 flex items-center gap-1.5 transition">
+          <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+          <span id="langText">हिंदी</span>
+        </button>
+
+        <button onclick="openBookingModal()" class="hidden md:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-sm transition" data-en="Book Appointment" data-hi="अपॉइंटमेंट लें">
+          Book Appointment
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="max-w-6xl mx-auto px-4 py-12 md:py-20 flex flex-col md:flex-row items-center gap-10">
+    <div class="flex-1 space-y-5">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold tracking-wide">
+        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+        <span data-en="Trusted Consultation in Bhagalpur" data-hi="भागलपुर में विश्वसनीय परामर्श">Trusted Consultation in Bhagalpur</span>
+      </div>
+      <h1 class="text-3xl md:text-5xl font-black text-slate-900 leading-tight" data-en="Modern, Fast & Reliable Clinical Care" data-hi="आधुनिक, त्वरित और विश्वसनीय चिकित्सा देखभाल">
+        Modern, Fast & Reliable Clinical Care
+      </h1>
+      <p class="text-base md:text-lg text-slate-600" data-en="Skip long waiting times. Schedule your consultation online, receive instant WhatsApp confirmations, and visit our modern clinic." data-hi="लंबी कतारों से बचें। अपना परामर्श ऑनलाइन बुक करें, सीधे व्हाट्सएप पर पुष्टि पाएं और हमारे क्लिनिक आएं।">
+        Skip long waiting times. Schedule your consultation online, receive instant WhatsApp confirmations, and visit our modern clinic.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 pt-2">
+        <button onclick="openBookingModal()" class="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition">
+          <i data-lucide="calendar" class="w-5 h-5"></i>
+          <span data-en="Schedule Online Slot" data-hi="ऑनलाइन स्लॉट बुक करें">Schedule Online Slot</span>
+        </button>
+        <button onclick="openPaymentModal()" class="px-6 py-3.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold rounded-xl flex items-center justify-center gap-2 transition">
+          <i data-lucide="qr-code" class="w-5 h-5 text-emerald-600"></i>
+          <span data-en="Pay Advance via UPI" data-hi="UPI द्वारा अग्रिम भुगतान">Pay Advance via UPI</span>
+        </button>
+      </div>
+
+      <!-- Verified Trust Badges -->
+      <div class="flex items-center gap-6 pt-4 text-xs text-slate-500">
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+          <span data-en="Verified Specialists" data-hi="प्रमाणित विशेषज्ञ">Verified Specialists</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <i data-lucide="clock" class="w-4 h-4 text-emerald-600"></i>
+          <span data-en="Zero Wait Guarantee" data-hi="समय पर परामर्श">Zero Wait Guarantee</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-1 w-full max-w-md md:max-w-none">
+      <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&auto=format&fit=crop&q=80" alt="Clinic Interior" class="w-full h-80 object-cover" loading="lazy">
+        <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-md flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold text-slate-500" data-en="Consultation Timings" data-hi="परामर्श का समय">Consultation Timings</p>
+            <p class="text-sm font-bold text-slate-800">Mon - Sat: 9:00 AM - 8:00 PM</p>
+          </div>
+          <a href="tel:+919876543210" class="p-2.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-100 rounded-lg transition">
+            <i data-lucide="phone-call" class="w-5 h-5"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION WITH DYNAMIC WHATSAPP TRIGGERS -->
+  <section id="services" class="bg-white py-16 border-t border-slate-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold text-slate-900" data-en="Specialized Services" data-hi="हमारी प्रमुख सेवाएं">Specialized Services</h2>
+        <p class="text-sm text-slate-500 mt-2" data-en="Direct inquiries tailored to your specific treatment requirements." data-hi="अपनी ज़रूरत के अनुसार सीधे व्हाट्सएप पर जानकारी प्राप्त करें।">Direct inquiries tailored to your specific treatment requirements.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
+              <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900" data-en="General Health Checkup" data-hi="सामान्य स्वास्थ्य जांच">General Health Checkup</h3>
+            <p class="text-xs text-slate-500 mt-2" data-en="Full body vitals, prescription review, and diagnostic checkups." data-hi="संपूर्ण स्वास्थ्य जांच, परामर्श और आवश्यक परीक्षण।">Full body vitals, prescription review, and diagnostic checkups.</p>
+            <div class="mt-4 text-sm font-bold text-slate-800">₹400 / Consultation</div>
+          </div>
+          <a href="https://wa.me/919876543210?text=Hello%20Apex%20Care,%20I%20want%20to%20inquire%20about%20General%20Health%20Checkup%20slots." target="_blank" class="mt-6 w-full py-2.5 px-4 bg-white border border-emerald-500 text-emerald-700 hover:bg-emerald-50 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 transition">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span data-en="WhatsApp Inquiry" data-hi="व्हाट्सएप पर पूछें">WhatsApp Inquiry</span>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-slate-50 border border-blue-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg relative transition">
+          <span class="absolute top-4 right-4 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Popular</span>
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-4">
+              <i data-lucide="stethoscope" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900" data-en="Specialist Consultation" data-hi="विशेषज्ञ परामर्श">Specialist Consultation</h3>
+            <p class="text-xs text-slate-500 mt-2" data-en="In-depth consultation for chronic issues and long-term care management." data-hi="गंभीर समस्याओं एवं पुरानी बीमारियों के लिए विशेषज्ञ परामर्श।">In-depth consultation for chronic issues and long-term care management.</p>
+            <div class="mt-4 text-sm font-bold text-slate-800">₹700 / Consultation</div>
+          </div>
+          <a href="https://wa.me/919876543210?text=Hello%20Apex%20Care,%20I%20would%20like%20to%20book%20a%20Specialist%20Consultation." target="_blank" class="mt-6 w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold text-xs flex items-center justify-center gap-2 transition">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span data-en="WhatsApp Inquiry" data-hi="व्हाट्सएप पर पूछें">WhatsApp Inquiry</span>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
+              <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900" data-en="Diagnostic Sample Pickup" data-hi="घर से सैंपल कलेक्शन">Diagnostic Sample Pickup</h3>
+            <p class="text-xs text-slate-500 mt-2" data-en="Doorstep blood sample collection with quick digital report delivery." data-hi="घर बैठे ब्लड टेस्ट सैंपल और डिजिटल रिपोर्ट की सुविधा।">Doorstep blood sample collection with quick digital report delivery.</p>
+            <div class="mt-4 text-sm font-bold text-slate-800">Starting at ₹250</div>
+          </div>
+          <a href="https://wa.me/919876543210?text=Hello%20Apex%20Care,%20I%20want%20to%20book%20a%20home%20sample%20collection." target="_blank" class="mt-6 w-full py-2.5 px-4 bg-white border border-emerald-500 text-emerald-700 hover:bg-emerald-50 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 transition">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span data-en="WhatsApp Inquiry" data-hi="व्हाट्सएप पर पूछें">WhatsApp Inquiry</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF & GOOGLE REVIEWS MOCKUP -->
+  <section id="reviews" class="py-16 max-w-6xl mx-auto px-4">
+    <div class="bg-blue-900 text-white rounded-3xl p-8 md:p-12 relative overflow-hidden">
+      <div class="max-w-xl">
+        <div class="flex items-center gap-1 text-amber-400 mb-3">
+          <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+          <span class="text-white text-sm font-bold ml-2">4.9 / 5.0 on Google</span>
+        </div>
+        <h2 class="text-2xl md:text-4xl font-bold" data-en="Top-Rated Patient Experience" data-hi="मरीजों का सबसे भरोसेमंद अनुभव">Top-Rated Patient Experience</h2>
+        <p class="text-blue-200 text-sm md:text-base mt-2" data-en="Read verified feedback from patients who booked appointments online." data-hi="ऑनलाइन अपॉइंटमेंट लेने वाले मरीजों के अनुभव पढ़ें।">Read verified feedback from patients who booked appointments online.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+        <div class="bg-blue-800/60 border border-blue-700/50 p-4 rounded-xl">
+          <p class="text-xs text-blue-100 italic" data-en="“Booking through the website was seamless. I walked in and was attended immediately without waiting.”" data-hi="“वेबसाइट से स्लॉट बुक करना बहुत आसान था। क्लिनिक पहुंचते ही तुरंत परामर्श मिल गया।”">“Booking through the website was seamless. I walked in and was attended immediately without waiting.”</p>
+          <p class="text-xs font-semibold text-white mt-3">— Rajesh Ranjan, Tilkamanjhi</p>
+        </div>
+        <div class="bg-blue-800/60 border border-blue-700/50 p-4 rounded-xl">
+          <p class="text-xs text-blue-100 italic" data-en="“Paying via the UPI option was quick, and the WhatsApp reminder 2 hours prior was very convenient.”" data-hi="“UPI से भुगतान तुरंत हो गया और 2 घंटे पहले व्हाट्सएप पर आया रिमाइंडर बहुत मददगार रहा।”">“Paying via the UPI option was quick, and the WhatsApp reminder 2 hours prior was very convenient.”</p>
+          <p class="text-xs font-semibold text-white mt-3">— Priya Sinha, Adampur</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & LOCATION EMBED -->
+  <section id="contact" class="py-16 bg-white border-t border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900" data-en="Send an Inquiry" data-hi="सीधा संदेश भेजें">Send an Inquiry</h2>
+        <p class="text-xs text-slate-500 mt-1 mb-6" data-en="Submissions route directly to our team's email." data-hi="यह फॉर्म सीधे हमारे क्लिनिक के ईमेल पर पहुंचता है।">Submissions route directly to our team's email.</p>
+
+        <!-- Formspree / Web3Forms Form Integration -->
+        <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4 text-xs font-medium">
+          <!-- Replace with Client's Web3Forms Access Key -->
+          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+          
+          <div>
+            <label class="block text-slate-700 mb-1" data-en="Full Name" data-hi="पूरा नाम">Full Name</label>
+            <input type="text" name="name" required placeholder="e.g. Amit Kumar" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          </div>
+          <div>
+            <label class="block text-slate-700 mb-1" data-en="Phone Number" data-hi="फ़ोन नंबर">Phone Number</label>
+            <input type="tel" name="phone" required placeholder="+91 98765 43210" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600">
+          </div>
+          <div>
+            <label class="block text-slate-700 mb-1" data-en="Message / Symptom Details" data-hi="समस्या या विवरण">Message / Symptom Details</label>
+            <textarea name="message" rows="3" placeholder="Briefly describe your requirements..." class="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+          </div>
+          <button type="submit" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-bold transition" data-en="Submit Message" data-hi="संदेश भेजें">
+            Submit Message
+          </button>
+        </form>
+      </div>
+
+      <div class="flex flex-col justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900" data-en="Clinic Location" data-hi="क्लिनिक का पता">Clinic Location</h2>
+          <p class="text-xs text-slate-500 mt-1 mb-4">Main Road, Tilkamanjhi, Bhagalpur, Bihar - 812001</p>
+        </div>
+        <!-- Google Map Iframe -->
+        <div class="w-full h-64 md:h-72 rounded-2xl overflow-hidden border border-slate-200">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14442.793836168532!2d86.9822!3d25.2425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f04a6015555555%3A0x123456789!2sTilkamanjhi%2C%20Bhagalpur!5e0!3m2!1sen!2sin!4v1700000000000" 
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING MODAL (CAL.COM EMBED) -->
+  <div id="bookingModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
+        <h3 class="font-bold text-slate-900" data-en="Select an Appointment Slot" data-hi="अपॉइंटमेंट स्लॉट चुनें">Select an Appointment Slot</h3>
+        <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-2 flex-1 overflow-y-auto">
+        <!-- Cal.com or Calendly Free Embed -->
+        <!-- Replace 'your-username/30min' with the actual Cal.com slug -->
+        <iframe src="https://cal.com" class="w-full h-[500px] border-0 rounded-lg"></iframe>
+      </div>
+    </div>
   </div>
 
+  <!-- UPI DIRECT PAYMENT MODAL -->
+  <div id="paymentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden p-6 text-center space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-slate-900 text-sm" data-en="Instant UPI Payment" data-hi="त्वरित UPI भुगतान">Instant UPI Payment</h3>
+        <button onclick="closePaymentModal()" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Dynamic QR Code API (Zero Backend) -->
+      <div class="p-3 bg-slate-100 rounded-xl inline-block border border-slate-200">
+        <!-- Generates a QR code for upi://pay link -->
+        <img id="upiQr" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=clinicupi@okaxis%26pn=Apex%20Care%20Clinic%26am=400%26cu=INR" alt="UPI QR Code" class="w-44 h-44 mx-auto rounded-lg">
+      </div>
+
+      <div>
+        <p class="text-xs text-slate-500">UPI ID: <span class="font-mono font-semibold text-slate-800">clinicupi@okaxis</span></p>
+        <p class="text-xs text-slate-500 mt-1">Consultation Advance: <span class="font-bold text-emerald-600">₹400</span></p>
+      </div>
+
+      <a href="upi://pay?pa=clinicupi@okaxis&pn=Apex%20Care%20Clinic&am=400&cu=INR" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2">
+        <i data-lucide="smartphone" class="w-4 h-4"></i>
+        <span>Open GPay / PhonePe / Paytm</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM STICKY ACTION BAR -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 px-3 py-2 flex items-center justify-around shadow-lg">
+    <a href="tel:+919876543210" class="flex flex-col items-center text-slate-600 hover:text-blue-600">
+      <i data-lucide="phone" class="w-4 h-4"></i>
+      <span class="text-[10px] font-semibold mt-1" data-en="Call" data-hi="कॉल">Call</span>
+    </a>
+    <a href="https://wa.me/919876543210?text=Hi,%20I%20want%20to%20book%20an%20appointment." target="_blank" class="flex flex-col items-center text-emerald-600">
+      <i data-lucide="message-circle" class="w-4 h-4"></i>
+      <span class="text-[10px] font-semibold mt-1">WhatsApp</span>
+    </a>
+    <a href="https://maps.google.com?q=Tilkamanjhi+Bhagalpur" target="_blank" class="flex flex-col items-center text-slate-600 hover:text-blue-600">
+      <i data-lucide="map-pin" class="w-4 h-4"></i>
+      <span class="text-[10px] font-semibold mt-1" data-en="Directions" data-hi="रास्ता">Directions</span>
+    </a>
+    <button onclick="openBookingModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-bold shadow-sm">
+      <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+      <span data-en="Book" data-hi="बुक">Book</span>
+    </button>
+  </div>
+
+  <!-- SCRIPTS & FUNCTIONALITY -->
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Modal Control Functions
+    function openBookingModal() {
+      document.getElementById('bookingModal').classList.remove('hidden');
+      document.getElementById('bookingModal').classList.add('flex');
+      document.body.classList.add('modal-open');
+    }
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+      document.getElementById('bookingModal').classList.remove('flex');
+      document.body.classList.remove('modal-open');
+    }
+    function openPaymentModal() {
+      document.getElementById('paymentModal').classList.remove('hidden');
+      document.getElementById('paymentModal').classList.add('flex');
+      document.body.classList.add('modal-open');
+    }
+    function closePaymentModal() {
+      document.getElementById('paymentModal').classList.add('hidden');
+      document.getElementById('paymentModal').classList.remove('flex');
+      document.body.classList.remove('modal-open');
+    }
+
+    // Bilingual Switcher Logic
+    let currentLang = 'en';
+    const langBtn = document.getElementById('langToggle');
+    const langText = document.getElementById('langText');
+
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'hi' : 'en';
+      langText.textContent = currentLang === 'en' ? 'हिंदी' : 'English';
+
+      document.querySelectorAll('[data-en]').forEach(el => {
+        el.textContent = el.getAttribute(`data-${currentLang}`);
+      });
+      // Re-run icon renderer in case innerHTML changed
+      lucide.createIcons();
+    });
+  </script>
 </body>
 </html>
